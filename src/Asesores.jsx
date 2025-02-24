@@ -29,7 +29,6 @@ function AsesorForm() {
     correo: "",
     telefono: "",
     direccion: "",
-    fecha_contratacion: "",
     activo: "1",
   });
   const [mensaje, setMensaje] = useState("");
@@ -77,9 +76,8 @@ function AsesorForm() {
           <Input type="text" name="nombre" placeholder="Nombre" onChange={handleChange} required />
           <Input type="text" name="apellido" placeholder="Apellido" onChange={handleChange} required />
           <Input type="email" name="correo" placeholder="Correo" onChange={handleChange} required />
-          <Input type="number" name="telefono" placeholder="Teléfono" onChange={handleChange} required />
-          <Input type="text" name="direccion" placeholder="Dirección" onChange={handleChange} required />
-          <Input type="date" name="fecha_contratacion" onChange={handleChange} required />
+          <Input type="number" name="telefono" placeholder="Teléfono" onChange={handleChange} required />
+          <Input type="text" name="direccion" placeholder="Dirección" onChange={handleChange} required />
           <Button type="submit">Guardar Asesor</Button>
         </form>
         {mensaje && <p style={{ textAlign: "center", color: "red" }}>{mensaje}</p>}
@@ -91,10 +89,10 @@ function AsesorForm() {
 function App() {
   return (
     <>
-      <h1 style={{ textAlign: "center" }}>Sistema de Gestión de Asesores</h1>
+      <h1 style={{ textAlign: "center" }}>Sistema de Gestión de Asesores</h1>
       <AsesorForm />
     </>
   );
 }
 
-export default App;
+export default App;

@@ -28,7 +28,6 @@ function ClienteForm() {
     segundo_nombre: "",
     apellido_paterno: "",
     apellido_materno: "",
-    fecha_nacimiento: "",
     telefono: "",
     correo: "",
     direccion: "",
@@ -80,10 +79,9 @@ function ClienteForm() {
           <Input type="text" name="segundo_nombre" placeholder="Segundo Nombre" onChange={handleChange} required />
           <Input type="text" name="apellido_paterno" placeholder="Apellido Paterno" onChange={handleChange} required />
           <Input type="text" name="apellido_materno" placeholder="Apellido Materno" onChange={handleChange} required />
-          <Input type="date" name="fecha_nacimiento" placeholder="Fecha de Nacimiento" onChange={handleChange} required />
-          <Input type="text" name="telefono" placeholder="Teléfono" onChange={handleChange} required />
-          <Input type="email" name="correo" placeholder="Correo Electrónico" onChange={handleChange} required />
-          <Input type="text" name="direccion" placeholder="Dirección" onChange={handleChange} required />
+          <Input type="text" name="telefono" placeholder="Teléfono" onChange={handleChange} required />
+          <Input type="email" name="correo" placeholder="Correo Electrónico" onChange={handleChange} required />
+          <Input type="text" name="direccion" placeholder="Dirección" onChange={handleChange} required />
           <Button type="submit">Guardar Cliente</Button>
         </form>
         {mensaje && <p style={{ textAlign: "center", color: "red" }}>{mensaje}</p>}
@@ -95,10 +93,10 @@ function ClienteForm() {
 function App() {
   return (
     <>
-      <h1 style={{ textAlign: "center" }}>Sistema de Gestión</h1>
+      <h1 style={{ textAlign: "center" }}>Sistema de Gestión</h1>
       <ClienteForm />
     </>
   );
 }
 
-export default App;
+export default App;

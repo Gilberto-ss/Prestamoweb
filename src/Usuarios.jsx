@@ -25,7 +25,7 @@ function Button({ children, ...props }) {
 function UsuarioForm() {
   const [usuario, setUsuario] = useState({
     nombre_usuario: "",
-    contraseña: "",
+    contraseña: "",
     primer_nombre: "",
     segundo_nombre: "",
     apellido_paterno: "",
@@ -78,13 +78,13 @@ function UsuarioForm() {
       <CardContent>
         <form onSubmit={handleSubmit}>
           <Input type="text" name="nombre_usuario" placeholder="Nombre de Usuario" onChange={handleChange} required />
-          <Input type="password" name="contraseña" placeholder="Contraseña" onChange={handleChange} required />
+          <Input type="password" name="contraseña" placeholder="Contraseña" onChange={handleChange} required />
           <Input type="text" name="primer_nombre" placeholder="Primer Nombre" onChange={handleChange} required />
           <Input type="text" name="segundo_nombre" placeholder="Segundo Nombre" onChange={handleChange} />
           <Input type="text" name="apellido_paterno" placeholder="Apellido Paterno" onChange={handleChange} required />
           <Input type="text" name="apellido_materno" placeholder="Apellido Materno" onChange={handleChange} required />
-          <Input type="email" name="correo" placeholder="Correo Electrónico" onChange={handleChange} required />
-          <Input type="tel" name="telefono" placeholder="Teléfono" onChange={handleChange} required />
+          <Input type="email" name="correo" placeholder="Correo Electrónico" onChange={handleChange} required />
+          <Input type="tel" name="telefono" placeholder="Teléfono" onChange={handleChange} required />
           <div style={{ margin: "10px 0" }}>
             <label>Rol:</label>
             <select name="rol" onChange={handleChange} value={usuario.rol} required>
@@ -112,10 +112,10 @@ function UsuarioForm() {
 function App() {
   return (
     <>
-      <h1 style={{ textAlign: "center" }}>Sistema de Gestión de Usuarios</h1>
+      <h1 style={{ textAlign: "center" }}>Sistema de Gestión de Usuarios</h1>
       <UsuarioForm />
     </>
   );
 }
 
-export default App;
+export default App;
