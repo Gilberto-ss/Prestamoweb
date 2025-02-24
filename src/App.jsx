@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import './App.css';
+import axios from 'axios';
 
 // Componentes internos
 function Card({ children }) {
@@ -36,7 +37,7 @@ function App() {
     formData.append("contraseña", contrasena);
 
     try {
-      const response = await fetch("http://localhost:8080/Login/usuarios", {
+      const response = await axios ("http://localhost:8080/Login/usuarios", {
         method: "POST",
         headers: {
           "Content-Type": "application/x-www-form-urlencoded",
@@ -44,7 +45,6 @@ function App() {
         body: formData,
       });
 
-      const data = await response.json();
 
       if (response.ok) {
         setMensaje("Login exitoso");
