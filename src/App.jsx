@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import './App.css';
-import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+
 
 // Componentes internos
 function Card({ children }) {
@@ -34,10 +35,10 @@ function App() {
 
     const formData = new URLSearchParams();
     formData.append("nombre_usuario", nombreUsuario);
-    formData.append("contraseña", contrasena);
+    formData.append("password", contrasena);
 
     try {
-      const response = await axios ("http://localhost:8080/Login/usuarios", {
+      const response = await  fetch("http://localhost:8080/Prestamos/api/Login/usuarios", {
         method: "POST",
         headers: {
           "Content-Type": "application/x-www-form-urlencoded",

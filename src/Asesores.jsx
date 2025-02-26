@@ -47,7 +47,7 @@ function AsesorForm() {
     });
 
     try {
-      const response = await fetch("http://localhost:8080/Asesores/guardar", {
+      const response = await fetch("http://localhost:8080/Prestamos/api/Asesores/guardar", {
         method: "POST",
         headers: {
           "Content-Type": "application/x-www-form-urlencoded",

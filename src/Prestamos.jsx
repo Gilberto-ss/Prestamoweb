@@ -44,7 +44,7 @@ function PrestamoForm() {
     });
 
     try {
-      const response = await fetch("http://localhost:8080/Prestamos/guardar", {
+      const response = await fetch("http://localhost:8080/Prestamos/api/Prestamos/guardar", {
         method: "POST",
         headers: {
           "Content-Type": "application/x-www-form-urlencoded",

@@ -49,7 +49,7 @@ function ClienteForm() {
     });
 
     try {
-      const response = await fetch("http://localhost:8080/Clientes/guardar", {
+      const response = await fetch("http://localhost:8080/Prestamos/api/Clientes/guardar", {
         method: "POST",
         headers: {
           "Content-Type": "application/x-www-form-urlencoded",

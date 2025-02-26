@@ -51,7 +51,7 @@ function UsuarioForm() {
     });
 
     try {
-      const response = await fetch("http://localhost:8080/Usuarios/guardar", {
+      const response = await fetch("http://localhost:8080/Prestamos/api/Usuarios/guardar", {
         method: "POST",
         headers: {
           "Content-Type": "application/x-www-form-urlencoded",
