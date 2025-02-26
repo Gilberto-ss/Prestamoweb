@@ -28,6 +28,7 @@ function App() {
   const [nombreUsuario, setNombreUsuario] = useState("");
   const [contrasena, setContrasena] = useState("");
   const [mensaje, setMensaje] = useState("");
+  const navigate = useNavigate(); // Hook para redirigir
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -49,6 +50,7 @@ function App() {
 
       if (response.ok) {
         setMensaje("Login exitoso");
+        setTimeout(() => navigate("/menu"), 1000); // Redirige al menú después de 1 segundo
       } else {
         setMensaje(data.error || "Error en la autenticación");
       }
