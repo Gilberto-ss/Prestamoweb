@@ -23,16 +23,17 @@ function Button({ children, ...props }) {
 }
 
 function UsuarioForm() {
+  const navigate = useNavigate();
   const [usuario, setUsuario] = useState({
     nombre_usuario: "",
-    contraseña: "",
+    password: "",
     primer_nombre: "",
     segundo_nombre: "",
     apellido_paterno: "",
     apellido_materno: "",
     correo: "",
     telefono: "",
-    rol: "asesor",
+    rol: "asesor", 
     activo: 1, 
   });
   const [mensaje, setMensaje] = useState("");
@@ -45,6 +46,12 @@ function UsuarioForm() {
     e.preventDefault();
     setMensaje("");
 
+    // Validaciones antes de enviar
+    if (!usuario.nombre_usuario || !usuario.password || !usuario.correo) {
+      setMensaje("Todos los campos obligatorios deben estar llenos.");
+      return;
+    }
+
     const formData = new URLSearchParams();
     Object.keys(usuario).forEach((key) => {
       formData.append(key, usuario[key]);
@@ -53,20 +60,18 @@ function UsuarioForm() {
     try {
       const response = await fetch("http://localhost:8080/Prestamos/api/Usuarios/guardar", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
-        },
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
         body: formData,
       });
 
       const data = await response.json();
       if (response.ok) {
-        setMensaje("Usuario guardado exitosamente");
+        setMensaje("Usuario guardado exitosamente.");
       } else {
-        setMensaje(data.error || "Error al guardar usuario");
+        setMensaje(data.error || "Error al guardar usuario.");
       }
     } catch (error) {
-      setMensaje("Error al conectar con el servidor");
+      setMensaje("Error al conectar con el servidor.");
     }
   };
 
@@ -78,20 +83,23 @@ function UsuarioForm() {
       <CardContent>
         <form onSubmit={handleSubmit}>
           <Input type="text" name="nombre_usuario" placeholder="Nombre de Usuario" onChange={handleChange} required />
-          <Input type="password" name="contraseña" placeholder="Contraseña" onChange={handleChange} required />
+          <Input type="password" name="password" placeholder="Contraseña" onChange={handleChange} required />
           <Input type="text" name="primer_nombre" placeholder="Primer Nombre" onChange={handleChange} required />
           <Input type="text" name="segundo_nombre" placeholder="Segundo Nombre" onChange={handleChange} />
           <Input type="text" name="apellido_paterno" placeholder="Apellido Paterno" onChange={handleChange} required />
           <Input type="text" name="apellido_materno" placeholder="Apellido Materno" onChange={handleChange} required />
-          <Input type="email" name="correo" placeholder="Correo Electrónico" onChange={handleChange} required />
-          <Input type="tel" name="telefono" placeholder="Teléfono" onChange={handleChange} required />
+          <Input type="email" name="correo" placeholder="Correo Electrónico" onChange={handleChange} required />
+          <Input type="tel" name="telefono" placeholder="Teléfono" onChange={handleChange} required />
+
           <div style={{ margin: "10px 0" }}>
             <label>Rol:</label>
             <select name="rol" onChange={handleChange} value={usuario.rol} required>
               <option value="asesor">Asesor</option>
               <option value="admin">Administrador</option>
+              <option value="usuario">Usuario</option>
             </select>
           </div>
+
           <div style={{ margin: "10px 0" }}>
             <label>Activo:</label>
             <input
@@ -101,9 +109,15 @@ function UsuarioForm() {
               onChange={(e) => setUsuario({ ...usuario, activo: e.target.checked ? 1 : 0 })}
             />
           </div>
+
           <Button type="submit">Guardar Usuario</Button>
         </form>
         {mensaje && <p style={{ textAlign: "center", color: "red" }}>{mensaje}</p>}
+
+        {/* Botón para volver al menú */}
+        <Button onClick={() => navigate("/menu")} style={{ background: "#28a745" }}>
+          Volver al Menú
+        </Button>        
       </CardContent>
     </Card>
   );
@@ -112,10 +126,11 @@ function UsuarioForm() {
 function App() {
   return (
     <>
-      <h1 style={{ textAlign: "center" }}>Sistema de Gestión de Usuarios</h1>
+      <h1 style={{ textAlign: "center" }}>Sistema de Gestión de Usuarios</h1>
       <UsuarioForm />
     </>
   );
 }
 
-export default App;
+export default App;
+

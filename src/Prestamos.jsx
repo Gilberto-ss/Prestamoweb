@@ -23,10 +23,13 @@ function Button({ children, ...props }) {
 }
 
 function PrestamoForm() {
+  const navigate = useNavigate(); // Hook para la navegación
   const [prestamo, setPrestamo] = useState({
     id_cliente: "",
     id_asesor: "",
     monto_prestado: "",
+    tasa_interes: "",
+    plazo: "",
   });
   const [mensaje, setMensaje] = useState("");
 
@@ -37,12 +40,19 @@ function PrestamoForm() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setMensaje("");
-
+  
+    let prestamoData = { ...prestamo };
+  
+    // Convertir los valores numéricos a enteros o flotantes según corresponda
+    prestamoData.monto_prestado = parseFloat(prestamoData.monto_prestado);
+    prestamoData.tasa_interes = parseInt(prestamoData.tasa_interes);
+    prestamoData.plazo = parseInt(prestamoData.plazo);
+  
     const formData = new URLSearchParams();
-    Object.keys(prestamo).forEach((key) => {
-      formData.append(key, prestamo[key]);
+    Object.keys(prestamoData).forEach((key) => {
+      formData.append(key, prestamoData[key]);
     });
-
+  
     try {
       const response = await fetch("http://localhost:8080/Prestamos/api/Prestamos/guardar", {
         method: "POST",
@@ -51,7 +61,7 @@ function PrestamoForm() {
         },
         body: formData,
       });
-
+  
       const data = await response.json();
       if (response.ok) {
         setMensaje("Préstamo guardado exitosamente");
@@ -62,7 +72,7 @@ function PrestamoForm() {
       setMensaje("Error al conectar con el servidor");
     }
   };
-
+  
   return (
     <Card>
       <CardHeader>
@@ -73,9 +83,16 @@ function PrestamoForm() {
           <Input type="number" name="id_cliente" placeholder="ID Cliente" onChange={handleChange} required />
           <Input type="number" name="id_asesor" placeholder="ID Asesor" onChange={handleChange} required />
           <Input type="number" name="monto_prestado" placeholder="Monto Prestado" onChange={handleChange} required />
+          <Input type="number" name="tasa_interes" placeholder="Tasa de Interés" onChange={handleChange} required />
+          <Input type="number" name="plazo" placeholder="Plazo (en meses)" onChange={handleChange} required />
           <Button type="submit">Guardar Préstamo</Button>
         </form>
         {mensaje && <p style={{ textAlign: "center", color: "red" }}>{mensaje}</p>}
+
+        {/* Botón para volver al menú */}
+        <Button onClick={() => navigate("/menu")} style={{ background: "#28a745" }}>
+          Volver al Menú
+        </Button>        
       </CardContent>
     </Card>
   );

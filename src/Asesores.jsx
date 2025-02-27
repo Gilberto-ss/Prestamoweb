@@ -23,19 +23,27 @@ function Button({ children, ...props }) {
 }
 
 function AsesorForm() {
+  const navigate = useNavigate(); 
   const [asesor, setAsesor] = useState({
-    nombre: "",
-    apellido: "",
+    primer_nombre: "",
+    segundo_nombre: "",
+    apellido_paterno: "",
+    apellido_materno: "",
     correo: "",
     telefono: "",
-    direccion: "",
-    activo: "1",
+    activo: 1,
   });
+
   const [mensaje, setMensaje] = useState("");
 
   const handleChange = (e) => {
-    setAsesor({ ...asesor, [e.target.name]: e.target.value });
-  };
+    const { name, value } = e.target;
+
+    setAsesor({
+        ...asesor,
+        [name]: name === "telefono" ? (value ? parseInt(value, 10) : null) : value
+    });
+};
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -73,18 +81,25 @@ function AsesorForm() {
       </CardHeader>
       <CardContent>
         <form onSubmit={handleSubmit}>
-          <Input type="text" name="nombre" placeholder="Nombre" onChange={handleChange} required />
-          <Input type="text" name="apellido" placeholder="Apellido" onChange={handleChange} required />
+          <Input type="text" name="primer_nombre" placeholder="Primer Nombre" onChange={handleChange} required />
+          <Input type="text" name="segundo_nombre" placeholder="Segundo Nombre" onChange={handleChange} />
+          <Input type="text" name="apellido_paterno" placeholder="Apellido Paterno" onChange={handleChange} required />
+          <Input type="text" name="apellido_materno" placeholder="Apellido Materno" onChange={handleChange} required />
           <Input type="email" name="correo" placeholder="Correo" onChange={handleChange} required />
-          <Input type="number" name="telefono" placeholder="Teléfono" onChange={handleChange} required />
-          <Input type="text" name="direccion" placeholder="Dirección" onChange={handleChange} required />
+          <Input type="number" name="telefono" placeholder="Teléfono" onChange={handleChange} required />
           <Button type="submit">Guardar Asesor</Button>
         </form>
         {mensaje && <p style={{ textAlign: "center", color: "red" }}>{mensaje}</p>}
+
+        {/* Botón para volver al menú */}
+        <Button onClick={() => navigate("/menu")} style={{ background: "#28a745" }}>
+          Volver al Menú
+        </Button>        
       </CardContent>
     </Card>
   );
 }
+
 
 function App() {
   return (

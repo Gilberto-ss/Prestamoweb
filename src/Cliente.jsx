@@ -23,16 +23,19 @@ function Button({ children, ...props }) {
 }
 
 function ClienteForm() {
+  const navigate = useNavigate(); 
   const [cliente, setCliente] = useState({
     primer_nombre: "",
     segundo_nombre: "",
     apellido_paterno: "",
     apellido_materno: "",
+    fecha_nacimiento: "",  
     telefono: "",
     correo: "",
     direccion: "",
     activo: 1,
   });
+  
   const [mensaje, setMensaje] = useState("");
 
   const handleChange = (e) => {
@@ -40,34 +43,42 @@ function ClienteForm() {
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    setMensaje("");
+  e.preventDefault();
+  setMensaje("");
 
-    const formData = new URLSearchParams();
-    Object.keys(cliente).forEach((key) => {
-      formData.append(key, cliente[key]);
+  let clienteData = { ...cliente };
+
+  
+  if (clienteData.fecha_nacimiento) {
+    clienteData.fecha_nacimiento = clienteData.fecha_nacimiento.replace(/-/g, "/");
+  }
+
+  const formData = new URLSearchParams();
+  Object.keys(clienteData).forEach((key) => {
+    formData.append(key, clienteData[key]);
+  });
+
+  try {
+    const response = await fetch("http://localhost:8080/Prestamos/api/Clientes/guardar", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+      body: formData,
     });
 
-    try {
-      const response = await fetch("http://localhost:8080/Prestamos/api/Clientes/guardar", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
-        },
-        body: formData,
-      });
-
-      const data = await response.json();
-      if (response.ok) {
-        setMensaje("Cliente guardado exitosamente");
-      } else {
-        setMensaje(data.error || "Error al guardar cliente");
-      }
-    } catch (error) {
-      setMensaje("Error al conectar con el servidor");
+    const data = await response.json();
+    if (response.ok) {
+      setMensaje("Cliente guardado exitosamente");
+    } else {
+      setMensaje(data.error || "Error al guardar cliente");
     }
-  };
+  } catch (error) {
+    setMensaje("Error al conectar con el servidor");
+  }
+};
 
+  
   return (
     <Card>
       <CardHeader>
@@ -76,20 +87,27 @@ function ClienteForm() {
       <CardContent>
         <form onSubmit={handleSubmit}>
           <Input type="text" name="primer_nombre" placeholder="Primer Nombre" onChange={handleChange} required />
-          <Input type="text" name="segundo_nombre" placeholder="Segundo Nombre" onChange={handleChange} required />
+          <Input type="text" name="segundo_nombre" placeholder="Segundo Nombre" onChange={handleChange} />
           <Input type="text" name="apellido_paterno" placeholder="Apellido Paterno" onChange={handleChange} required />
           <Input type="text" name="apellido_materno" placeholder="Apellido Materno" onChange={handleChange} required />
+          <Input type="date" name="fecha_nacimiento" placeholder="Fecha de Nacimiento" onChange={handleChange} required />
           <Input type="text" name="telefono" placeholder="Teléfono" onChange={handleChange} required />
           <Input type="email" name="correo" placeholder="Correo Electrónico" onChange={handleChange} required />
           <Input type="text" name="direccion" placeholder="Dirección" onChange={handleChange} required />
           <Button type="submit">Guardar Cliente</Button>
         </form>
         {mensaje && <p style={{ textAlign: "center", color: "red" }}>{mensaje}</p>}
+
+        {/* Botón para volver al menú */}
+        <Button onClick={() => navigate("/menu")} style={{ background: "#28a745" }}>
+          Volver al Menú
+        </Button>        
       </CardContent>
     </Card>
   );
 }
 
+  
 function App() {
   return (
     <>

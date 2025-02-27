@@ -23,7 +23,7 @@ function Button({ children, ...props }) {
 }
 
 function PagosForm() {
-    // Estado para la operación "guardar"
+    const navigate = useNavigate();
     const [pago, setPago] = useState({
       id_prestamo: "",
       id_asesor: "",
@@ -192,6 +192,11 @@ function PagosForm() {
                 {mensajeAbonar}
               </p>
             )}
+
+            {/* Botón para volver al menú */}
+        <Button onClick={() => navigate("/menu")} style={{ background: "#28a745" }}>
+          Volver al Menú
+        </Button>        
           </CardContent>
         </Card>
       </div>
